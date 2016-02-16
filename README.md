@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-# Flask to Azure Blob 
-=======
 # Uploading file from Python-Flask to Azure Blob 
->>>>>>> 629e394136b66c45e70755039954f28d749b3985
+
 A simple Python flask application to upload files to Azure Blob
 
 **Steps**
