@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, redirect, url_for
 from werkzeug import secure_filename
-from azure.storage.blob import BlobService
+from azure.storage.blob import BlockBlobService
 import string, random, requests
 
 app = Flask(__name__, instance_relative_config=True)
@@ -11,8 +11,7 @@ account = app.config['ACCOUNT']   # Azure account name
 key = app.config['STORAGE_KEY']      # Azure Storage account access key  
 container = app.config['CONTAINER'] # Container name
 
-blob_service = BlobService(account_name=account, account_key=key)
-blob_service.create_container(container, x_ms_blob_public_access='container')
+blob_service = BlockBlobService(account_name=account, account_key=key)
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -23,7 +22,7 @@ def upload_file():
         Randomfilename = id_generator()
         filename = Randomfilename + '.' + fileextension
         try:
-            blob_service.put_block_blob_from_file(container, filename, file,)
+            blob_service.create_blob_from_stream(container, filename, file)
         except Exception:
             print 'Exception=' + Exception 
             pass
